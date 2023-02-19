@@ -1,21 +1,17 @@
-use nix::unistd::close;
-use AeroKiTTY::pty::pty;
+use std::env;
+use AeroKiTTY::term::{run, Term};
+
 fn main() {
-    let mut pty = pty::new();
-    pty.spawn("/bin/sh".to_string());
+    // if cfg!(windows) {
+    //     let shell = "C:\\Windows\\System32\\cmd.exe";
+    //     run(shell.to_string());
+    // } else if cfg!(unix) {
+    //     let shell = env::var("SHELL").unwrap();
+    //     run(shell);
+    // }
 
-    let mut read_buffer = vec![];
-    loop {
-        match pty.read_stdout() {
-            Some(mut read_bytes) => {
-                read_buffer.append(&mut read_bytes);
-            }
-            None => {
-                println!("{:?}", String::from_utf8(read_buffer).unwrap());
-                break;
-            }
-        }
-    }
+    let shell = "cmd.exe".to_string();
+    let _term = Term::new(shell, "".to_string());
 
-    close(pty.slave).unwrap();
+    println!("Exiting");
 }

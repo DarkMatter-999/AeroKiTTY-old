@@ -1,5 +1,5 @@
 use std::env;
-use AeroKiTTY::term::{run, Term};
+use AeroKiTTY::term::Term;
 
 fn main() {
     // if cfg!(windows) {
@@ -11,7 +11,10 @@ fn main() {
     // }
 
     let shell = "cmd.exe".to_string();
-    let _term = Term::new(shell, "".to_string());
+    let mut term = Term::new(shell, "".to_string());
+
+    term.write_stdin();
+    term.read_stdio();
 
     println!("Exiting");
 }

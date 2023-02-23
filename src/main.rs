@@ -2,7 +2,7 @@ use sdl2::{event::Event, keyboard::Keycode};
 use std::env;
 use AeroKiTTY::{
     config::{FONT_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH},
-    frontend::render,
+    frontend::Frontend,
     term::Term,
 };
 
@@ -17,9 +17,6 @@ fn main() {
 
     let shell = "cmd.exe".to_string();
     let mut term = Term::new(shell, "".to_string());
-
-    term.write_stdin();
-    term.read_stdio();
 
     let sdl_context = sdl2::init().unwrap();
     let video_subsys = sdl_context.video().unwrap();
@@ -47,6 +44,10 @@ fn main() {
 
     canvas.clear();
 
+    term.write_stdin();
+
+    let mut frontend = Frontend::new(&mut canvas, &texture_creator, &font, 0, 0);
+
     'mainloop: loop {
         for event in sdl_context.event_pump().unwrap().poll_iter() {
             match event {
@@ -59,13 +60,7 @@ fn main() {
             }
         }
 
-        render(
-            &mut canvas,
-            &texture_creator,
-            &font,
-            "Microsoft Windows [Version 10.0.22621.1265]\r\n(c) Microsoft Corporation. All rights reserved.\r\nE:\\Projects\\Rust\\AeroKiTTY>ls -la"
-                .to_string(),
-        );
+        frontend.render(term.read_stdio());
     }
 
     println!("Exiting");

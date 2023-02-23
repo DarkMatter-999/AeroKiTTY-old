@@ -1,5 +1,5 @@
 use std::{
-    io::{BufRead, BufReader, Write},
+    io::{BufRead, BufReader, Read, Write},
     process::{Child, Command, Stdio},
 };
 
@@ -20,13 +20,19 @@ impl Term {
         Term { process }
     }
 
-    pub fn read_stdio(&mut self) {
+    pub fn read_stdio(&mut self) -> String {
         let stdout = self.process.stdout.as_mut().unwrap();
-        let stdout_reader = BufReader::new(stdout);
-        let stdout_lines = stdout_reader.lines();
+        // let stdout_reader = BufReader::new(stdout);
+        // let stdout_lines = stdout_reader.lines();
 
-        print!("{:?}", stdout_lines);
+        let mut buf = [0; 128];
+        stdout.read_exact(&mut buf);
 
+        let string = std::str::from_utf8(&buf).unwrap();
+
+        println!("{}", string);
+
+        return string.to_string();
         // for line in stdout_lines {
         //     if let Ok(line) = line {
         //         println!("{:?}", line);

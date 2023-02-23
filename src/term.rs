@@ -25,9 +25,13 @@ impl Term {
         let stdout_reader = BufReader::new(stdout);
         let stdout_lines = stdout_reader.lines();
 
-        for line in stdout_lines {
-            println!("{:?}", line);
-        }
+        print!("{:?}", stdout_lines);
+
+        // for line in stdout_lines {
+        //     if let Ok(line) = line {
+        //         println!("{:?}", line);
+        //     }
+        // }
     }
 
     pub fn write_stdin(&mut self) {

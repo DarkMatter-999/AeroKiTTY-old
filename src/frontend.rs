@@ -5,6 +5,8 @@ use sdl2::{
     video::WindowContext,
 };
 
+use crate::config::FONT_SIZE;
+
 pub fn render_text(
     canvas: &mut WindowCanvas,
     texture_creator: &TextureCreator<WindowContext>,
@@ -47,6 +49,6 @@ pub fn render(
     let mut y = 10;
     for line in lines {
         render_text(canvas, texture_creator, font, line.to_string(), x, y);
-        y += 32;
+        y += FONT_SIZE;
     }
 }

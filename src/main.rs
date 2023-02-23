@@ -1,11 +1,10 @@
 use sdl2::{event::Event, keyboard::Keycode};
 use std::env;
-use AeroKiTTY::{frontend::render, term::Term};
-
-static SCREEN_WIDTH: u32 = 800;
-static SCREEN_HEIGHT: u32 = 600;
-
-static FONT_SIZE: u16 = 32;
+use AeroKiTTY::{
+    config::{FONT_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH},
+    frontend::render,
+    term::Term,
+};
 
 fn main() {
     // if cfg!(windows) {
